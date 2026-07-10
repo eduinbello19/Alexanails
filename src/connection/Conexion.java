@@ -19,7 +19,7 @@ public class Conexion
         {
             e.printStackTrace();
         }
-
+        //retorna la conexion
         return  con;
     }
 }
