@@ -50,5 +50,34 @@ public class CitaController
     }
 
     //metodo eliminar
+    public void eliminar(int id)
+    {
+        Connection con = conexion.getConexion();
+
+        String query = "DELETE FROM cita WHERE id_cita = ?";
+
+        try
+        {
+            PreparedStatement pst = con.prepareStatement(query);
+
+            pst.setInt(1,id);
+
+            int resultado = pst.executeUpdate();
+
+            if (resultado > 0)
+            {
+                JOptionPane.showMessageDialog(null, "Cita eliminada correctamente.");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Hubo un error al eliminar la cita.");
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    //metodo actualizar
 
 }
