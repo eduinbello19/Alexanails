@@ -6,7 +6,9 @@ import model.Cita;
 import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CitaController
 {
@@ -115,5 +117,44 @@ public class CitaController
         {
             e.printStackTrace();
         }
+    }
+    // Metodo mostrar
+    public ArrayList<Cita> mostrar()
+    {
+        ArrayList<Cita> listaCitas = new ArrayList<>();
+
+        Connection con = conexion.getConexion();
+
+        String query = "SELECT * FROM cita";
+
+        try
+        {
+            PreparedStatement pst = con.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next())
+            {
+                Cita cita = new Cita(
+                        rs.getInt("id_cita"),
+                        rs.getString("fecha"),
+                        rs.getString("hora"),
+                        rs.getString("estado"),
+                        rs.getInt("id_cliente"),
+                        rs.getInt("id_empleado"),
+                        rs.getInt("id_servicio")
+                );
+
+                listaCitas.add(cita);
+            }
+
+            rs.close();
+            pst.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return listaCitas;
     }
 }
